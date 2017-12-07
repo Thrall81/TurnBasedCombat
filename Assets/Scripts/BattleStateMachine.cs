@@ -10,7 +10,6 @@ public class BattleStateMachine : MonoBehaviour {
         TAKEACTION,
         PERFORMACTION
     }
-
     public PerformAction battleStates;
 
     public List<HandleTurn> PerformList = new List<HandleTurn>();
@@ -30,8 +29,21 @@ public class BattleStateMachine : MonoBehaviour {
         switch (battleStates)
         {
             case PerformAction.WAITING:
+                if (PerformList.Count > 0)
+                {
+                    battleStates = PerformAction.TAKEACTION;
+                }
                 break;
             case PerformAction.TAKEACTION:
+                GameObject performer = GameObject.Find(PerformList[0].m_attacker);
+                if (PerformList[0].type == "Enemy")
+                {
+                    HeroStateMachine HSM = performer.GetComponent<HeroStateMachine>();
+                    HSM.m_heroToAttack = PerformList[0].AttackersTarget;
+                    HSM.currentState = HeroStateMachine.TurnState.ACTION;
+                }
+                
+                battleStates = PerformAction.PERFORMACTION;
                 break;
             case PerformAction.PERFORMACTION:
                 break;
