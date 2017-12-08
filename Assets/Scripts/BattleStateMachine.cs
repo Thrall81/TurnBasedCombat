@@ -36,7 +36,7 @@ public class BattleStateMachine : MonoBehaviour {
                 break;
             case PerformAction.TAKEACTION:
                 GameObject performer = GameObject.Find(PerformList[0].m_attacker);
-                if (PerformList[0].type == "Enemy")
+                //if (PerformList[0].type == "Enemy")
                 {
                     HeroStateMachine HSM = performer.GetComponent<HeroStateMachine>();
                     HSM.m_heroToAttack = PerformList[0].AttackersTarget;
